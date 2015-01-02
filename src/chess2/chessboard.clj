@@ -21,6 +21,9 @@
 (defn valid-pos? [x y]
   (and (valid-x? x) (valid-y? y)))
 
+(defn not-valid-pos? [x y]
+  (not (valid-pos? x y)))
+
 (defn contains-char? [the-string, the-char]
   (not= (some #(= the-char %) the-string) nil))
 
@@ -48,3 +51,34 @@
   (and 
     (valid-y? y)
     (valid-y? (calc-offset-y y offset))))
+
+(defn valid-movement [chessboard fromx fromy tox toy]
+  (and 
+    (valid-pos? fromx fromy)
+    (valid-pos? tox toy)
+    (occupied? chessboard tox toy)))
+
+(defn get-piece [chessboard x y]
+  (if (and (valid-pos? x y) (occupied? chessboard x y))
+      (get (get chessboard x) y)))
+    
+(defn piece-color [chessboard x y] 
+  (if (and (valid-pos? x y) (occupied? chessboard x y))
+    (if (= (get (get-piece chessboard x y) 0) \w)
+      :white
+      :black)))
+
+(defn piece-name 
+  ([the-string] (let [name (get the-string 1)]
+                  (cond
+                    (= name \p) :pawn
+                    (= name \r) :rook
+                    (= name \n) :knight
+                    (= name \b) :bishop
+                    (= name \q) :queen
+                    (= name \k) :king
+                    :else :empty)))
+  
+  ([chessboard x y] (if (and (valid-pos? x y) (occupied? chessboard x y))
+                      (piece-name (get-piece chessboard x y))
+                      :empty)))
