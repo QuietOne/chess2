@@ -1,8 +1,6 @@
 (ns chess2.army.classic.pawn
   (use chess2.chessboard))
 
-;TODO: en-passant
-
 (defn eat? [chessboard fromx fromy tox toy]
   (and
     (and ;specific eating position
@@ -14,6 +12,8 @@
         (= (offset-y fromy toy) 1)))
     (occupied? chessboard tox toy)
     (not-same-color? chessboard fromx fromy tox toy)))
+
+;TODO: promote pawn
 
 (defn move-forward? [chessboard fromx fromy tox toy]
   (and
@@ -39,6 +39,7 @@
         (not-occupied? chessboard tox toy)
         (not-occupied? chessboard tox (inc toy))))))
 
+;TODO: en-passant
 (defn en-passant? [chessboard fromx fromy tox toy]
   false)
 
