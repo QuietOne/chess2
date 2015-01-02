@@ -1,7 +1,16 @@
 (ns chess2.core-test
-  (:require [clojure.test :refer :all]
-            [chess2.core :refer :all]))
+  (use chess2.army.classic.pawn))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(def pos 
+  {:a ["wr" "wp" "." "." "." "." "bp" "br"]
+   :b ["wn" "wp" "." "." "." "." "bp" "bn"]
+   :c ["wb" "wp" "bp" "." "." "." "bp" "bb"]
+   :d ["wq" "wp" "." "." "." "." "bp" "bq"]
+   :e ["wk" "wp" "." "." "." "." "bp" "bk"]
+   :f ["wb" "wp" "." "." "." "." "bp" "bb"]
+   :g ["wn" "wp" "." "." "." "." "bp" "bn"]
+   :h ["wr" "wp" "." "." "." "." "bp" "br"]
+   })
+
+(available-moves pos :d 1)
+(moveable? pos :d 1 :c 2)

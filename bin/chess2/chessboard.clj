@@ -27,8 +27,13 @@
 (defn contains-char? [the-string, the-char]
   (not= (some #(= the-char %) the-string) nil))
 
+
+(defn not-occupied? [chessboard x y]
+  (contains-char? (get (get chessboard x) y) \.))
+  
 (defn occupied? [chessboard x y]
-  (not (contains-char? (get (get chessboard x) y) \.)))
+  (not (not-occupied? chessboard x y)))
+
 
 (defn get-x-num [x-keyword] 
   (get {:a 0, :b 1, :c 2, :d 3, :e 4, :f 5, :g 6, :h 7} x-keyword))
@@ -38,6 +43,12 @@
 
 (defn calc-offset-x [x offset]
   (get-x-keyword (+ (get-x-num x) offset)))
+
+(defn offset-x [x1 x2]
+  (- (get-x-num x1) (get-x-num x2)))
+
+(defn offset-y [y1 y2]
+  (- y1 y2))
 
 (defn calc-offset-y [y offset]
   (+ y offset))
@@ -61,6 +72,22 @@
     (if (= (get (get-piece chessboard x y) 0) \w)
       :white
       :black)))
+
+(defn same-color? [chessboard x1 y1 x2 y2]
+  (let [color1 (piece-color chessboard x1 y1)
+        color2 (piece-color chessboard x2 y2)]
+    (if (occupied? chessboard x1 y1)
+      (= color1 color2)
+      false)))
+
+(defn white-color? [chessboard x y]
+  (= :white (piece-color chessboard x y)))
+
+(defn black-color? [chessboard x y]
+  (= :black (piece-color chessboard x y)))
+
+(defn not-same-color? [chessboard x1 y1 x2 y2]
+  (not (same-color? chessboard x1 y1 x2 y2)))
 
 (defn piece-name 
   ([the-string] (let [name (get the-string 1)]
@@ -99,7 +126,7 @@
 (defn remove-piece [chessboard x y]
   (set-piece chessboard x y "."))
 
-(defn valid-movement? [chessboard fromx fromy tox toy]
+(defn valid-movement? [fromx fromy tox toy]
   (and 
     (valid-pos? fromx fromy)
     (valid-pos? tox toy)))
