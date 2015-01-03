@@ -1,16 +1,29 @@
-(ns chess2.army.classic.rook
+(ns chess2.army.classic.king
   (use chess2.figure)
   (use chess2.chessboard))
 
+
+(defn not-check-pos? [chessboard x y color]
+  true
+  )
+
+(defn check-pos? [chessboard x y color]
+  (not (not-check-pos? chessboard x y color))
+  )
+
 (defn possible-move? [chessboard fromx fromy tox toy]
-  (or
-      (and ;same column
-        (= fromx tox)
-        (every? #(not-occupied? chessboard tox %) (range (inc fromy) toy)))
-      (and ;same row
-        (= fromy toy)
-        (every? #(not-occupied? chessboard (get-x-keyword %) toy) 
-                (range (inc (get-x-num fromx)) (get-x-num tox))))))
+  (and
+    (not-check-pos? chessboard tox toy (piece-color chessboard fromx fromy))
+    (or 
+      (and
+        (or
+          (= (java.lang.Math/abs (offset-x fromx tox)) 1)
+          (= fromx tox))
+        (or
+          (= (java.lang.Math/abs (offset-y fromy toy)) 1)
+          (= fromy toy))))
+    (not ;not moving is not an option
+      (and (= fromx tox) (fromy toy)))))
 
 (defn eat? [chessboard fromx fromy tox toy]
   (and

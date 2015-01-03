@@ -1,16 +1,13 @@
-(ns chess2.army.classic.rook
+(ns chess2.army.classic.queen
   (use chess2.figure)
-  (use chess2.chessboard))
+  (use chess2.chessboard)
+  (require [chess2.army.classic.bishop :as bishop])
+  (require [chess2.army.classic.rook :as rook]))
 
 (defn possible-move? [chessboard fromx fromy tox toy]
   (or
-      (and ;same column
-        (= fromx tox)
-        (every? #(not-occupied? chessboard tox %) (range (inc fromy) toy)))
-      (and ;same row
-        (= fromy toy)
-        (every? #(not-occupied? chessboard (get-x-keyword %) toy) 
-                (range (inc (get-x-num fromx)) (get-x-num tox))))))
+    (bishop/possible-move? chessboard fromx fromx tox toy)
+    (rook/possible-move? chessboard fromx fromy tox toy)))
 
 (defn eat? [chessboard fromx fromy tox toy]
   (and

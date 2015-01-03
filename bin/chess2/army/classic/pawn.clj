@@ -1,4 +1,5 @@
 (ns chess2.army.classic.pawn
+  (use chess2.figure)
   (use chess2.chessboard))
 
 (defn eat? [chessboard fromx fromy tox toy]
@@ -53,11 +54,3 @@
       (move-two-steps? chessboard fromx fromy tox toy)
       (en-passant? chessboard fromx fromy tox toy)
       )))
-
-(defn available-moves [chessboard x y]
-  (reduce (fn [acc column]
-            (reduce (fn [acc1 row]
-                      (if (moveable? chessboard x y column row)
-                        (conj acc1 [column row])
-                        acc1)) acc (range 8))
-            ) [] [:a :b :c :d :e :f :g :h]))
