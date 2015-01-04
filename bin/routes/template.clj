@@ -8,6 +8,7 @@
   "Include only title of page and body content"
   (html
     (doctype :xhtml-strict)
+    ;[:script {:src "http://fb.me/react-0.12.1.js"}]
     (include-css "/style.css")
     (xhtml-tag "en"
                [:head
@@ -23,6 +24,7 @@
   "Include title of page, css and body content"
   (html
     (doctype :xhtml-strict)
+    ;[:script {:src "http://fb.me/react-0.12.1.js"}]
     (include-css css)
     (xhtml-tag "en"
                [:head

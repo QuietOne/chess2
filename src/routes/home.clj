@@ -16,7 +16,8 @@
            [:button "Play a Single Player Game"]
            ]
           [:p
-           [:button "Play a MultiPlayer Game"]
+           [:button 
+            (link-to "/multiplayer-offline" "Play a MultiPlayer Offline Game")]
            ]
           [:p
            [:button "Play a MultiPlayer Online Game"]
