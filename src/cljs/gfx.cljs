@@ -1,4 +1,4 @@
-(ns routes.gfx.chessboard
+(ns gfx
   (use chess2.chessboard)
   (use chess2.figure)
   ;(:require [reagent.core :as reagent :refer [atom]])
